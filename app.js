@@ -26,6 +26,8 @@ app.get("/", (req, res) => {
   });
 });
 
+require('./app/routes/product.route')(app);
+
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
