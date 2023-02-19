@@ -41,9 +41,33 @@ exports.addToCart = (req, res) => {
       user_id: id,
     },
     {
-      //melakukan query di dalam array miliki carditems dengan kondisi nilai tidak boleh sama
       //fungsi dari add to set sebuah metode dalam MongoDB yang digunakan untuk menambahkan elemen ke dalam sebuah array di dalam dokumen koleksi MongoDB, namun hanya jika elemen tersebut belum ada dalam array tersebut. Jika elemen yang ditambahkan sudah ada dalam array, maka operasi akan diabaikan.
       $addToSet: {
+        cart_items: productCode,
+      },
+    }
+  )
+    .then((result) => {
+      res.send(result);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: err.message || "Some error occurred while retrieving orders.",
+      });
+    });
+};
+
+exports.removeFromCart = (req, res) => {
+  const id = Number(req.params.id);
+  const productCode = String(req.params.product);
+
+  Order.updateOne(
+    {
+      user_id: id,
+    },
+    {
+      //mengambil data dari array yang ada di cart_items
+      $pull: {
         cart_items: productCode,
       },
     }
