@@ -2,7 +2,8 @@ module.exports = mongoose => {
     const schema = mongoose.Schema(
         {
             user_id: Number,
-            cart_items:[String]
+            cart_items:[String],
+            total_price: Number
         }
     );
     

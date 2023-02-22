@@ -85,18 +85,15 @@ exports.removeFromCart = (req, res) => {
 exports.checkout = (req, res) => {
   const id = Number(req.params.id);
   const productCode = String(req.body.product);
-  const totalPrice = Number(req.body.totalPrice);
+  const totalPrice = Number(req.body.productPrice);
 
   Order.updateOne(
     {
       user_id: id,
     },
     {
-      //mengambil data dari array yang ada di cart_items
-      $pull: {
-        cart_items: productCode,
-      },
       $set: {
+        cart_items: productCode,
         total_price: totalPrice,
       },
     }

@@ -6,7 +6,8 @@ module.exports = mongoose => {
         price: Number,
         description: String,
         imageUrl:   String,
-        averageRating: Number
+        averageRating: Number,
+        totalPrice: Number
     }
   );
 
