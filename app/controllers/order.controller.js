@@ -81,3 +81,33 @@ exports.removeFromCart = (req, res) => {
       });
     });
 };
+
+exports.checkout = (req, res) => {
+  const id = Number(req.params.id);
+  const productCode = String(req.body.product);
+  const totalPrice = Number(req.body.totalPrice);
+
+  Order.updateOne(
+    {
+      user_id: id,
+    },
+    {
+      //mengambil data dari array yang ada di cart_items
+      $pull: {
+        cart_items: productCode,
+      },
+      $set: {
+        total_price: totalPrice,
+      },
+    }
+  )
+    .then((result) => {
+      res.send(result);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: err.message || "Some error occurred while retrieving orders.",
+      });
+    })
+};
+
